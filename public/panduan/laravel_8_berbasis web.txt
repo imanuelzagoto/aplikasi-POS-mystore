@@ -130,3 +130,97 @@ Catatan pembuatan aplikasi POS myshop berbasis web dengan laravel 8
 - setelah tabel migration sudah dibuat jalankan perintah php artisan migrate
 
 # membuat helper di laravel
+- buat folder helpers ke dalam direcotry proyek app/Http/Helpers
+- didalam folder Helpers buat file helpers.php
+- file helper agar dapat dibaca diseluruh file php harus mendaftarkannya ke dalam file composer.json terletak pada json name autoload
+	"autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        },
+        "files": [
+            "app/Http/Helpers/helpers.php"
+        ]
+
+    },
+- untuk memastikan helpers ini berjalan lakukan pengujian dengan menjalankan perintah php artisan tinker
+	php artisan tinker
+	Psy Shell v0.11.21 (PHP 8.2.9 — cli) by Justin Hileman
+	> 1000000
+	= 1000000
+
+	> number_format (100000)
+	= "100,000"
+- dan lakukan pengujian dengan membuat function di dalam file helpers.php
+	function format_uang($angka)
+	{
+    		return number_format($angka, 0, ',', '.');
+	}
+
+- untuk jalankan testing helpers harus menjalankan composer dump-autoload terlebih dahulu dan kemudian jalankan kembali php artisan tinker
+- kemudian jalankan format file helpersnya
+	jika outputnya seperti ini :
+	php artisan tinker
+	Psy Shell v0.11.21 (PHP 8.2.9 — cli) by Justin Hileman
+	> format_uang (1000000)
+	= "1.000.000"
+	maka format tersebut sudah replace
+
+- setelah sudah selesai kemudian buatlah format angka terbilang pada file helpers
+	format seperti ini :
+	
+	function terbilang($angka)
+	{
+    		$angka = abs($angka);
+    		$baca  = array('', 'satu', 'dua', 'tiga', 'empat', 'lima', 'enam', 'tujuh', 'delapan', 'sembilan', 'sepuluh', 'sebelas');
+    		$terbilang = '';
+
+    		if ($angka < 12) { // 0 - 11
+        	$terbilang = ' ' . $baca[$angka];
+   		} elseif ($angka < 20) { // 12 - 19
+        	$terbilang = terbilang($angka - 10) . ' belas';
+    		} elseif ($angka < 100) { // 20 - 99
+        	$terbilang = terbilang($angka / 10) . ' puluh' . terbilang($angka % 10);
+    		} elseif ($angka < 200) { // 100 - 199
+        	$terbilang = ' seratus' . terbilang($angka - 100);
+    		} elseif ($angka < 1000) { // 200 - 999
+        	$terbilang = terbilang($angka / 100) . ' ratus' . terbilang($angka % 100);
+    		} elseif ($angka < 2000) { // 1.000 - 1.999
+        	$terbilang = ' seribu' . terbilang($angka - 1000);
+    		} elseif ($angka < 1000000) { // 2.000 - 999.999
+        	$terbilang = terbilang($angka / 1000) . ' ribu' . terbilang($angka % 1000);
+    		} elseif ($angka < 1000000000) { // 1000000 - 999.999.990
+        	$terbilang = terbilang($angka / 1000000) . ' juta' . terbilang($angka % 1000000);
+    		}
+
+    		return $terbilang;
+		}
+- setelah sudah selesai lakukan untuk membaut format tanggal indonesia
+	function tanggal_indonesia($tgl, $tampil_hari = true)
+{
+    $nama_hari  = array(
+        'Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jum\'at', 'Sabtu'
+    );
+    $nama_bulan = array(
+        1 =>
+        'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+    );
+
+    $tahun   = substr($tgl, 0, 4);
+    $bulan   = $nama_bulan[(int) substr($tgl, 5, 2)];
+    $tanggal = substr($tgl, 8, 2);
+    $text    = '';
+
+    if ($tampil_hari) {
+        $urutan_hari = date('w', mktime(0, 0, 0, substr($tgl, 5, 2), $tanggal, $tahun));
+        $hari        = $nama_hari[$urutan_hari];
+        $text       .= "$hari, $tanggal $bulan $tahun";
+    } else {
+        $text       .= "$tanggal $bulan $tahun";
+    }
+
+    return $text;
+}
+
+# menghilangkan public URL
