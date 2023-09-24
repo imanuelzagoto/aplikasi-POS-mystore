@@ -248,4 +248,149 @@ Catatan pembuatan aplikasi POS myshop berbasis web dengan laravel 8
 		RewriteRule ^ server.php [L]
 	</IfModule>
 
-- 
+# membuat halaman login
+- melakukan proses autentikasi dan otorisasi
+- sebelum masuk proses autentikasi dan otorisasi terlebih dahulu kita menginstal package yang dibutuhkan
+- kemudian terlebih dahulu baca documentasi yang disediakan laravel yaitu ada https://jetstream.laravel.com/installation.html untuk download pacakge
+- jalankan perintah berikut composer require laravel/jetstream
+- jika mendapatkan error saat install package jetstreamnya jalankan perintah ini composer remove laravel/jetstream
+- kemudian jalankan perintah php artisan optimize untuk menghapus config atau cache yang di routing ataupun view dsb
+- kemudian lakukan instalasi ulang dengan perintah berikut composer require laravel/jetstream
+- jika instalasi berhasil jalankan perintah berikut php artisan jetstream:install livewire
+- jika sudah selesai lakukan perintah npm install && npm run dev
+- setelah sudah selesai jalankan php artisan migrate
+- selanjutnya jalankan perintah php artisan vendor:publish --tag=jetstream-views untuk publish jetstreamnya
+- selanjutnya jalankan kembali aplikasi nya dengan perintah php artisan serve
+- kemudian periksa halaman loginnya
+- perbaiki file guest.blade.php di folder view 
+	<!-- Scripts -->
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
+- kemudian perbaiki file authentication-card-logo.blade.php dengan code ini <a href="{{ url('/') }}">
+- selanjutnya lakukan untuk mengganti halaman login dengan menggunakan template login adminLTE
+- sebelumnya mengganti halaman login lakukan pengecekan database user lakukan perintah dengan cepat php artisan tinker berikut langkahnya:
+	php artisan tinker
+	Psy Shell v0.11.21 (PHP 8.2.9 — cli) by Justin Hileman
+	> $user = new \App\Models\User();
+	= App\Models\User {#6325 +profile_photo_url: "https://ui-avatars.com/api/?name=&color=7F9CF5&background=EBF4FF",}	
+	> $user
+	= App\Models\User {#6325
+    +profile_photo_url: "https://ui-avatars.com/api/?name=&color=7F9CF5&background=EBF4FF",
+  }
+
+	> $user->get();
+	= Illuminate\Database\Eloquent\Collection {#6669
+    all: [
+      App\Models\User {#7031
+        id: 1,
+        name: "User",
+        email: "users@gmail.com",
+        email_verified_at: null,
+        #password: "$2y$10$zp4YXBQiwL4Un6hJbjXPjO/kNg/9oN83vzBJy1XlImZW8X0VFbJ5.",
+        #two_factor_secret: null,
+        #two_factor_recovery_codes: null,
+        two_factor_confirmed_at: null,
+        photo: null,
+        level: 0,
+        #remember_token: null,
+        created_at: "2023-09-24 17:54:11",
+        updated_at: "2023-09-24 17:54:11",
+- jika db user tidak ada maka buat db user dengan perintah php artisan tinker
+	> $user->name = 'Administrator'
+	= "Administrator"
+
+	> $user->email = 'eagle@gmail.com';
+	= "eagle@gmail.com"
+
+	> $user->password = bcrypt('password');
+	= "$2y$10$GuGFzhAxuHuTfn1bSPeiN..g4bzWPuo3wqtRFr5Q.oMmi/4mYoXtW"
+
+	> $user->level = 1;
+	= 1
+
+	> $user->save();
+	= true
+
+	outputnya:
+	App\Models\User {#7292
+        id: 2,
+        name: "Administrator",
+        email: "eagle@gmail.com",
+        email_verified_at: null,
+        #password: "$2y$10$GuGFzhAxuHuTfn1bSPeiN..g4bzWPuo3wqtRFr5Q.oMmi/4mYoXtW",
+        #two_factor_secret: null,
+        #two_factor_recovery_codes: null,
+        two_factor_confirmed_at: null,
+        photo: null,
+        level: 1,
+        #remember_token: null,
+        created_at: "2023-09-24 18:04:48",
+        updated_at: "2023-09-24 18:04:48",
+        +profile_photo_url: "https://ui-avatars.com/api/?name=A&color=7F9CF5&background=EBF4FF",
+      },
+    ],
+  }
+
+- untuk user level nya 0 dan admin levelnya 1
+- pada route/web.php ganti route ini Route::get('/', function () {
+    return view('welcome');
+}); menjadi Route::get('/', fn () => redirect()->route('login')); hal ini dilakukan agar saat run aplikasi nya akan berada di halaman login terlebih dahulu
+
+- tambahkan satu file kedalam folder layouts dengan nama auth.blade.php kemudian copy file login.html ke dalam auth.blade.php
+- kemudian pada file login.blade.php edit tambahkan ini @extends('layouts.auth')
+	@section('login')
+		<div class="login-box">
+			<div class="login-logo">
+				<a href="../../index2.html"><b>Admin</b>LTE</a>
+			</div>
+			<!-- /.login-logo -->
+			<div class="login-box-body">
+				<p class="login-box-msg">Sign in to start your session</p>
+
+				<form action="../../index2.html" method="post">
+					<div class="form-group has-feedback">
+						<input type="email" class="form-control" placeholder="Email">
+						<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+					</div>
+					<div class="form-group has-feedback">
+						<input type="password" class="form-control" placeholder="Password">
+						<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+					</div>
+					<div class="row">
+						<div class="col-xs-8">
+							<div class="checkbox icheck">
+								<label>
+									<input type="checkbox"> Remember Me
+								</label>
+							</div>
+						</div>
+						<!-- /.col -->
+						<div class="col-xs-4">
+							<button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+						</div>
+						<!-- /.col -->
+					</div>
+				</form>
+
+				<div class="social-auth-links text-center">
+					<p>- OR -</p>
+					<a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i>
+						Sign in using
+						Facebook</a>
+					<a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i>
+						Sign in using
+						Google+</a>
+				</div>
+				<!-- /.social-auth-links -->
+
+				<a href="#">I forgot my password</a><br>
+				<a href="register.html" class="text-center">Register a new membership</a>
+
+			</div>
+			<!-- /.login-box-body -->
+		</div>
+	@endsection
+
+- edit halaman login dengan menghapus beberapa feature yang tidak dibutuhkan
