@@ -36,25 +36,20 @@
 
 <body class="hold-transition skin-blue-light sidebar-mini">
     <div class="wrapper">
-
         {{-- Header --}}
         @includeIf('layouts.header')
         {{-- end header --}}
-
         {{-- sidebar --}}
         @includeIf('layouts.sidebar')
         {{-- end sidebar --}}
-
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             @yield('main')
         </div>
         <!-- /.content-wrapper -->
-
         {{-- footer --}}
         @includeIf('layouts.footer')
         {{-- end footer --}}
-
         <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-dark" style="display: none;">
             <!-- Create the tabs -->
@@ -114,7 +109,6 @@
                         </li>
                     </ul>
                     <!-- /.control-sidebar-menu -->
-
                     <h3 class="control-sidebar-heading">Tasks Progress</h3>
                     <ul class="control-sidebar-menu">
                         <li>

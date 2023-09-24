@@ -224,3 +224,28 @@ Catatan pembuatan aplikasi POS myshop berbasis web dengan laravel 8
 }
 
 # menghilangkan public URL
+- pada folder public pindahkan file .htaccess ke direcotory proyek
+- kemudian edit file .htaccess nya
+- kemudian ubah format .htaccess dengan format ini 
+	<IfModule mod_rewrite.c>
+		<IfModule mod_negotiation.c>
+			Options -MultiViews -Indexes
+		</IfModule>
+
+		RewriteEngine On
+
+		# Redirect Trailing Slashes If Not A Folder...
+		RewriteCond %{REQUEST_FILENAME} -d [OR]
+		RewriteCond %{REQUEST_FILENAME} -f
+		RewriteRule ^ ^$1 [N]
+
+		RewriteCond %{REQUEST_URI} (\.\w+$) [NC]
+		RewriteRule ^(.*)$ public/$1
+
+		# Send Requests To Front Controller...
+		RewriteCond %{REQUEST_FILENAME} !-d
+		RewriteCond %{REQUEST_FILENAME} !-f
+		RewriteRule ^ server.php [L]
+	</IfModule>
+
+- 
