@@ -74,4 +74,59 @@ Catatan pembuatan aplikasi POS myshop berbasis web dengan laravel 8
 - pada menu dashboard tambahkan grafik
 
 # Membuat Migration
-- 
+- buat nama database di phpmyadmin
+- lalu jalankan php artisan migrate untuk membuat database
+- jika ingin menghapus isi dari database tinggal jalankan perintah php artisan migrate:rollback
+- kemudian pada folder databse laravel buka folder migration di file create_table_user.php tambahkan kolom baru dengan perintah php artisan make:migration add_new_column_to_users_table
+- pada file add_new_column_to_users_table.php dibagian ini tambahkan table photo dan level
+	public function up()
+    	{
+        	Schema::table('users', function (Blueprint $table) {
+            	//
+        	});
+    	} 
+	menjadi seperti ini :
+	public function up()
+    	{
+        	Schema::table('users', function (Blueprint $table) {
+            	$table->string('photo')->nullable();
+            	$table->tinyInteger('level')->default(0);
+        	});
+    	}
+- tetapi jika ingin mau rolleback tinggal tambahkan ini 
+	public function down()
+    		{
+        		Schema::table('users', function (Blueprint $table) {
+            			$table->dropColumn([
+                		'photo',
+                		'level'
+            			]);
+        		});
+    		}
+- selanjutnya buat table product dengan perintah php artisan make:migration create_category_table
+	public function up()
+    	{
+        	Schema::create('category', function (Blueprint $table) {
+            	$table->increments('id_category');
+            	$table->string('name_category')->unique();
+            	$table->timestamps();
+        	});
+    	}
+- selanjutnya buat table product dengan perintah php artisan make:migration create_product_table
+	public function up()
+    {
+        Schema::create('product', function (Blueprint $table) {
+            $table->increments('id_product');
+            $table->integer('id_category');
+            $table->string('product_name')->unique();
+            $table->string('brand')->nullable();
+            $table->integer('purchase_price');
+            $table->tinyInteger('discount')->default(0);
+            $table->integer('price');
+            $table->integer('stock');
+            $table->timestamps();
+        });
+    }
+- setelah tabel migration sudah dibuat jalankan perintah php artisan migrate
+
+# membuat helper di laravel

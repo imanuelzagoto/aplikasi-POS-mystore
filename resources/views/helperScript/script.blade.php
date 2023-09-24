@@ -40,3 +40,4 @@
 <script src="{{ asset('helper-master/dist/js/pages/dashboard2.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('helper-master/dist/js/demo.js') }}"></script>
+<script src="{{ asset('helper-master/js/jam.js') }}"></script>
