@@ -1,0 +1,77 @@
+Catatan pembuatan aplikasi POS myshop berbasis web dengan laravel 8
+
+
+# install alat bantu implementasi proyek
+1. install XAMPP
+2. Install visual studio code
+3. Install laravel
+
+# Setup larval
+1. Install composer
+   "  https://getcomposer.org/ "
+2. Install larval installer
+   "composer global require laravel/installer"
+3. Membuat proyek laravel baru
+   "composer create-project laravel/laravel:^8.0 namafileproyek"
+4. Masuk ke direcotry proyer laravel
+   "cd proyeklaravel"
+5. Download/install kebutuhan package laravel
+   "composer install atau composer update"
+6. Untuk menampilkan daftar proyek open source yang digunakan oleh proyek laravel
+   "Composer fund"
+7. Buka proyek larval di Visual Studio code
+   "code ."
+8. Untuk memastikan instálási laravel berjalan
+   "Php artisan serve"
+   "http://127.0.0.1:8000"
+   Screen Shot 2023-09-23 at 21.46.44
+
+# Integrasi laravel dengan adminLTE versi 2
+- install adminLTE pada pada proyek lavável di directory public
+  "git clone https://github.com/ColorlibHQ/AdminLTE.git"
+- pada folder resources/views tambahkan folder layouts dan tambahkan file dengan Nama master.blade.php
+- kemudian pastekan template index adminLTE ke salami file master.blade.php
+- Lulu hapus script pada bawaan lavável di file welcome.blade.php, kemudian panggil master.blade.php
+  "@extends('layouts.master')
+- kemudian integrasikan asset template adminLTE yang ada pada public yang ada pada file master.blade.php
+  "<link rel="stylesheet" href="{{ asset('helper-master/bower_components/bootstrap/dist/css/bootstrap.min.css') }}">"
+- jalankan proyek di browser
+- melakukan analisa pada tampilan web sesuai dengan kebutuhan proyek
+
+# Customization menu-menu aplikasi sesuai kebutuhan
+############## Menu Dashboard Admin ##############
+- Dasbor (Dashboard)
+- Data Pokok (Master)
+	* Kategori (Category)
+	* Produk (Product)
+	* Anggota (Member)
+	* Pemasok (Supplier)
+- Transaksi (Transactions)
+	* Pengeluaran (Expenses)
+	* Daftar Pembelian (Purchase List)
+	* Transaksi Pembelian (Purchase Transaction)
+	* Daftar Penjualan (Sales List)
+	* Transaksi Aktif (Active Transactions)
+	* Transaksi Baru (New Transactions)
+- Laporan (Reports)
+	* Laporan Penjualan (Sales Reports)
+	* Laporan Keuangan (Financial Reports)
+	* Laporan Inventaris (Inventory Reports)
+	* Laporan Aktivitas Pengguna (User Activity Reports)
+- Pengaturan (Settings)
+	* Pengguna (User)
+	* Pengaturan (Setting)
+	* Profil (Profile)
+
+- pada file master.blade.php lakukan pembagian beberapa komponen dengan menambahkan file sidebar.blade.php dan header.blade.php kedalam folder resources/layouts
+- pada section header dalam master.blade.php lakukan cut untuk dipindahkan kedalam file header.blade.php
+- setelah section header dicut tambahkan @includeIf('layouts.header') untuk ngeload section yang telah dipindahkan ke file header.blade.php
+- kemudian lakukan juga untuk section sidebar dalam master.blade.php untuk dipindahkan ke dalam file sidebar.blade.php dan tambahkan @includeIf('layouts.header') kedalam file master blade bagian section sidebar
+- tambahkan file pada layouts dengan nama footer.blade.php dan paste section footer yang telah di cut didalam file master.blade.php
+- kemudian lakukan customization menu-menu sidebar
+- pada menu dashboard gunakan yang single menu
+- setelah menu sudah custome kemudian lakukan pergantian icon2 pada keseluruhan menu sesuai dengan kebutuhan pada menu
+- pada menu dashboard tambahkan grafik
+
+# Membuat Migration
+- 
