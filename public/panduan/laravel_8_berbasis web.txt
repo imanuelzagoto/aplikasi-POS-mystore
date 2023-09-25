@@ -394,3 +394,14 @@ Catatan pembuatan aplikasi POS myshop berbasis web dengan laravel 8
 	@endsection
 
 - edit halaman login dengan menghapus beberapa feature yang tidak dibutuhkan
+
+# memperbaiki tampilan dan layout aplikasi
+- hapus beberapa fitur yang tidak dibutuhkan pada header aplikasi
+- pada file header.blade.php dibagian sign out edit script nya seperti ini 
+	<div class="pull-right">
+    <a href="#" class="btn btn-default btn-flat" onclick="$('#logout-form').submit()">Sign out</a></div>
+- setelah penutup </header> tambahkan script ini 
+		<form action="{{ route('logout') }}" method="post" id="logout-form" style="display: none;"">
+    	@csrf
+	</form>
+- 

@@ -1,4 +1,4 @@
-<title>Dashboard</title>
+<title>{{ config('app.name') }} | Dashboard</title>
 
 @extends('layouts.master')
 @section('main')
