@@ -23,7 +23,7 @@
             </li>
             <li class="header">MASTER</li>
             <li>
-                <a href="#">
+                <a href="{{ route('category.index') }}">
                     <i class="fa fa-cube"></i>
                     <span>Category</span>
                 </a>

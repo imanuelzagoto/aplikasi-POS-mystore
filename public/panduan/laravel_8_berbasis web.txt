@@ -404,4 +404,28 @@ Catatan pembuatan aplikasi POS myshop berbasis web dengan laravel 8
 		<form action="{{ route('logout') }}" method="post" id="logout-form" style="display: none;"">
     	@csrf
 	</form>
-- 
+
+# CRUD Kategory
+-  buatlah crud kategory dengan perintah php artisan make:model NamaFileModel
+- setelah itu cek file category yang telah dibuat di dalam folder app/Models/
+- buka file models tambahkan ini 
+	class Category extends Model
+	{
+    	use HasFactory;
+    	protected $table = 'category';
+    	protected $guarded = [];
+	}
+- setelah file model telah dibuat, kemudian buatlah file controllernya dengan perintah php artisan make:controller NamaFileController -r
+- kemudian setelah model dan controller sudah dibuat maka defenisikan route pada tiap controllernya agar dapat diakses oleh route
+- selanjutnya buka file web.php yang ada pada folder route, sebelumnya lakukan grouping middleware untuk login berikut:
+	Route::group(['middleware' => 'auth'], function () {
+    Route::get('/category/data', [CategoryController::class, 'data']); # untuk get data category pada tabel category
+	Route::resource('/category', CategoryController::class); # untuk route pada akses resource
+	});
+- kemudian jalankan kembali proyek nya
+- setelah route nya sudah benar maka tambahkan sebuah folder dalam folder views dengan nama folder category yang dimana file tersebut akan menyimpan file blade untuk tampilan pada menu category
+- didalam folder category tambahkan 2 file dengan nama form.blade.php dan index.blade.php
+- buatlah tampilan data table pada catery list pada file indexnya
+- kemudian buat table nya dengan menambahkan data table bawaan dari adminlte script dan link copy dan paste ke dalam file master
+- dan panggil ke dalam index category
+- lakukan inisialisasi datatable

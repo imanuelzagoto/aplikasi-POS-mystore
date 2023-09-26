@@ -32,6 +32,9 @@
 <script src="{{ asset('helper-master/bower_components/fastclick/lib/fastclick.js') }}"></script>
 <!-- ChartJS -->
 <script src="{{ asset('helper-master/bower_components/chart.js/Chart.js') }}"></script>
+<!-- DataTables -->
+<script src="{{ asset('helper-master/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('helper-master/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('helper-master/dist/js/adminlte.min.js') }}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->

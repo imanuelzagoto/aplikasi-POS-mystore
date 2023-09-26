@@ -28,6 +28,9 @@
         href="{{ asset('helper-master/bower_components/bootstrap-daterangepicker/daterangepicker.css') }}">
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="{{ asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}">
+    <!-- Datatables -->
+    <link rel="stylesheet"
+        href="{{ asset('helper-master/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
 
     <!-- Google Font -->
     <link rel="stylesheet"
@@ -73,9 +76,10 @@
     </div>
     <!-- ./wrapper -->
 
-    {{-- script --}}
+    <!-- Script-->
     @includeIf('helperScript.script')
-    {{-- end script --}}
+    <!-- ./Script-->
+    @stack('scripts')
 </body>
 
 </html>
