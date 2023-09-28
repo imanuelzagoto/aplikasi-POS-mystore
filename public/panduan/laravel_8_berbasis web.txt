@@ -429,3 +429,20 @@ Catatan pembuatan aplikasi POS myshop berbasis web dengan laravel 8
 - kemudian buat table nya dengan menambahkan data table bawaan dari adminlte script dan link copy dan paste ke dalam file master
 - dan panggil ke dalam index category
 - lakukan inisialisasi datatable
+- setelah buka bootstrap.com di browser/google cari versi 3 dan kemudian klik menu javascript dan cari example untuk modal
+- setelah example modal di klik lalu copy code untuk modal dan paste kedalam file form.blade.php
+- setelah itu lakukan include ke dalam index.blade untuk kategory.form nya
+- lakukan aksi pada button save pada modal form untuk menyimpan data ke database
+- lakukan validasi data ketika disubmit dengan cara :
+	- bootstrap validator
+		https://100hz.github.io/bootstrap-validator
+	atau
+	- link CDN
+	https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js
+
+- selanjutnya install laravel datatable di https://github.com/yajra/laravel-datatables dengan perintah composer require yajra/laravel-datatables-oracle:"~9.0"
+- kemudian pastekan regsiter ini Yajra\DataTables\DataTablesServiceProvider::class, ke provider di file config/app.php
+- dan alieases pastekan ini 'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+- kemudian publish datatables dengan perintah php artisan vendor:publish --provider="Yajra\DataTables\DataTablesServiceProvider"
+- terakhir jalankan php artisan config:clear
+- documentasi datatable https://yajrabox.com/docs/laravel-datatables/master/engine-eloquent

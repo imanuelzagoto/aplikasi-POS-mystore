@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,6 +29,6 @@ Route::middleware([
 
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/Category/data', [CategoryController::class, 'data'])->name('category.data');
+    Route::get('/category/data', [CategoryController::class, 'data'])->name('category.data');
     Route::resource('/category', CategoryController::class);
 });
